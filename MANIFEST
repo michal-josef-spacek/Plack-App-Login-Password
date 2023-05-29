@@ -17,6 +17,7 @@ MANIFEST			This list of files
 META.yml
 Password.pm
 README
+SIGNATURE
 t/Plack-App-Login-Password/01-use.t
 t/Plack-App-Login-Password/02-version.t
 t/Plack-App-Login-Password/03-general.t
