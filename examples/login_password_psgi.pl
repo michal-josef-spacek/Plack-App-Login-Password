@@ -11,6 +11,7 @@ use Tags::Output::Indent;
 # Run application.
 my $app = Plack::App::Login::Password->new(
         'css' => CSS::Struct::Output::Indent->new,
+        'generator' => 'Plack::App::Login::Password',
         'tags' => Tags::Output::Indent->new(
                 'preserved' => ['style'],
                 'xml' => 1,
@@ -26,7 +27,7 @@ Plack::Runner->new->run($app);
 # <html lang="en">
 #   <head>
 #     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-#     <meta name="generator" content="Plack::App::Login::Password; Version: 0.01"
+#     <meta name="generator" content="Plack::App::Login::Password"
 #       />
 #     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 #     <title>
