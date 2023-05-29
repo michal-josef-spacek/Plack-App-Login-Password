@@ -1,57 +1,28 @@
 package Plack::App::Login::Password;
 
-use base qw(Plack::Component);
+use base qw(Plack::Component::Tags::HTML);
 use strict;
 use warnings;
 
-use CSS::Struct::Output::Raw;
-use Error::Pure qw(err);
-use Plack::Util::Accessor qw(css generator register_link tags title);
-use Scalar::Util qw(blessed);
+use Plack::Util::Accessor qw(generator register_link title);
 use Tags::HTML::Container;
 use Tags::HTML::Login::Access;
-use Tags::HTML::Page::Begin;
-use Tags::HTML::Page::End;
-use Tags::Output::Raw;
-use Unicode::UTF8 qw(encode_utf8);
 
 our $VERSION = 0.01;
 
-sub call {
-	my ($self, $env) = @_;
-
-	$self->_tags;
-	$self->tags->finalize;
-	my $content = encode_utf8($self->tags->flush(1));
-
-	return [
-		200,
-		[
-			'content-type' => 'text/html; charset=utf-8',
-		],
-		[$content],
-	];
-}
-
-sub prepare_app {
+sub _css {
 	my $self = shift;
 
-	if ($self->css) {
-		if (! blessed($self->css) || ! $self->css->isa('CSS::Struct::Output')) {
-			err "Bad 'CSS::Struct::Output' object.";
-		}
-	} else {
-		$self->css(CSS::Struct::Output::Raw->new);
-	}
+	$self->{'_container'}->process_css;
+	$self->{'_login_access'}->process_css;
 
-	if ($self->tags) {
-		if (! blessed($self->tags) || ! $self->tags->isa('Tags::Output')) {
-			err "Bad 'Tags::Output' object.";
-		}
-	} else {
-		$self->tags(Tags::Output::Raw->new('xml' => 1));
-	}
+	return;
+}
 
+sub _prepare_app {
+	my $self = shift;
+
+	# Defaults which rewrite defaults in module which I am inheriting.
 	if (! defined $self->generator) {
 		$self->generator(__PACKAGE__.'; Version: '.$VERSION);
 	}
@@ -60,18 +31,13 @@ sub prepare_app {
 		$self->title('Login page');
 	}
 
+	# Inherite defaults.
+	$self->SUPER::_prepare_app;
+
+	# Defaults from this module.
 	my %p = (
 		'css' => $self->css,
 		'tags' => $self->tags,
-	);
-
-	# Tags helper for begin of page.
-	$self->{'_page_begin'} = Tags::HTML::Page::Begin->new(
-		%p,
-		'generator' => $self->generator,
-		'lang' => {
-			'title' => $self->title,
-		},
 	);
 
 	# Tags helper for login button.
@@ -87,30 +53,14 @@ sub prepare_app {
 	return;
 }
 
-sub _css {
+sub _tags_middle {
 	my $self = shift;
 
-	$self->{'_page_begin'}->process_css;
-	$self->{'_container'}->process_css;
-	$self->{'_login_access'}->process_css;
-
-	return;
-}
-
-sub _tags {
-	my $self = shift;
-
-	$self->_css;
-
-	$self->{'_page_begin'}->process;
 	$self->{'_container'}->process(
 		sub {
 			$self->{'_login_access'}->process;
 		},
 	);
-	Tags::HTML::Page::End->new(
-		'tags' => $self->tags,
-	)->process;
 
 	return;
 }
@@ -218,7 +168,7 @@ Returns Plack::Component object.
  # <!DOCTYPE html>
  # <html lang="en">
  #   <head>
- #     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ #     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  #     <meta name="generator" content="Plack::App::Login::Password; Version: 0.01"
  #       />
  #     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -315,15 +265,9 @@ Returns Plack::Component object.
 
 =head1 DEPENDENCIES
 
-L<CSS::Struct::Output::Raw>,
-L<Error::Pure>,
 L<Plack::Util::Accessor>,
-L<Scalar::Util>,
-L<Tags::HTML::Login::Password>,
-L<Tags::HTML::Page::Begin>,
-L<Tags::HTML::Page::End>,
-L<Tags::Output::Raw>,
-L<Unicode::UTF8>.
+L<Plack::Component::Tags::HTML>,
+L<Tags::HTML::Login::Password>.
 
 =head1 SEE ALSO
 

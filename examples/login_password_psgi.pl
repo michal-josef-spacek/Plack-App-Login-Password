@@ -25,7 +25,7 @@ Plack::Runner->new->run($app);
 # <!DOCTYPE html>
 # <html lang="en">
 #   <head>
-#     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+#     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 #     <meta name="generator" content="Plack::App::Login::Password; Version: 0.01"
 #       />
 #     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

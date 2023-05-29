@@ -1,7 +1,8 @@
 TODO
 ====
-1. Rewrite to Plack::App::Tags::HTML
 2.
 
 Applied
 =======
+1. Rewrite to Plack::App::Tags::HTML
+OK [20230529] skim
