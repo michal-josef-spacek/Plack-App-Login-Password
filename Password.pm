@@ -325,6 +325,16 @@ L<Tags::HTML::Page::End>,
 L<Tags::Output::Raw>,
 L<Unicode::UTF8>.
 
+=head1 SEE ALSO
+
+=over
+
+=item L<Plack::App::Login>
+
+Plack login application.
+
+=back
+
 =head1 REPOSITORY
 
 L<https://github.com/michal-josef-spacek/Plack-App-Login-Password>
