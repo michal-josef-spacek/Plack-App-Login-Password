@@ -8,7 +8,7 @@ use Plack::Util::Accessor qw(generator register_link title);
 use Tags::HTML::Container;
 use Tags::HTML::Login::Access;
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 sub _css {
 	my $self = shift;
@@ -298,6 +298,6 @@ BSD 2-Clause License
 
 =head1 VERSION
 
-0.01
+0.02
 
 =cut
