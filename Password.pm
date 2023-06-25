@@ -4,6 +4,7 @@ use base qw(Plack::Component::Tags::HTML);
 use strict;
 use warnings;
 
+use Plack::Session;
 use Plack::Util::Accessor qw(generator register_link title);
 use Tags::HTML::Container;
 use Tags::HTML::Login::Access;
@@ -14,7 +15,10 @@ sub _css {
 	my ($self, $env) = @_;
 
 	$self->{'_container'}->process_css;
-	$self->{'_login_access'}->process_css;
+	$self->{'_login_access'}->process_css({
+		'error' => 'red',
+		'info' => 'blue',
+	});
 
 	return;
 }
@@ -56,9 +60,15 @@ sub _prepare_app {
 sub _tags_middle {
 	my ($self, $env) = @_;
 
+	my $messages_ar = [];
+	if (exists $env->{'psgix.session'}) {
+		my $session = Plack::Session->new($env);
+		$messages_ar = $session->get('messages');
+		$session->set('messages', []);
+	}
 	$self->{'_container'}->process(
 		sub {
-			$self->{'_login_access'}->process;
+			$self->{'_login_access'}->process($messages_ar);
 		},
 	);
 
@@ -351,8 +361,9 @@ Returns Plack::Component object.
 
 =head1 DEPENDENCIES
 
-L<Plack::Util::Accessor>,
 L<Plack::Component::Tags::HTML>,
+L<Plack::Session>,
+L<Plack::Util::Accessor>,
 L<Tags::HTML::Login::Password>.
 
 =head1 SEE ALSO

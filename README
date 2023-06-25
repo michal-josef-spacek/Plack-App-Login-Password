@@ -264,7 +264,7 @@ EXAMPLE
      # </html>
 
 DEPENDENCIES
-    Plack::Util::Accessor, Plack::Component::Tags::HTML,
+    Plack::Component::Tags::HTML, Plack::Session, Plack::Util::Accessor,
     Tags::HTML::Login::Password.
 
 SEE ALSO

@@ -30,9 +30,10 @@ no_index:
     - xt
 requires:
   Plack::Component::Tags::HTML: 0.15
+  Plack::Session: 0
   Plack::Util::Accessor: 0
   Tags::HTML::Container: 0
-  Tags::HTML::Login::Access: 0
+  Tags::HTML::Login::Access: 0.03
   perl: 5.8.0
 resources:
   bugtracker: https://github.com/michal-josef-spacek/Plack-App-Login-Password/issues
