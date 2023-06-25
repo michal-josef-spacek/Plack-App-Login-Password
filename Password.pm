@@ -4,8 +4,11 @@ use base qw(Plack::Component::Tags::HTML);
 use strict;
 use warnings;
 
+use Plack::Request;
+use Plack::Response;
 use Plack::Session;
-use Plack::Util::Accessor qw(generator register_link title);
+use Plack::Util::Accessor qw(generator login_cb message_cb redirect_login redirect_error
+	register_link title);
 use Tags::HTML::Container;
 use Tags::HTML::Login::Access;
 
@@ -19,6 +22,36 @@ sub _css {
 		'error' => 'red',
 		'info' => 'blue',
 	});
+
+	return;
+}
+
+sub _login_check {
+	my ($self, $env, $body_parameters_hr) = @_;
+
+	if (! exists $body_parameters_hr->{'login'}
+		|| $body_parameters_hr->{'login'} ne 'login') {
+
+		$self->_message($env, 'error', 'There is no login POST.');
+		return 0;
+	}
+	if (! defined $body_parameters_hr->{'username'} || ! $body_parameters_hr->{'username'}) {
+		$self->_message($env, 'error', "Missing username.");
+		return 0;
+	}
+	if (! defined $body_parameters_hr->{'password'} || ! $body_parameters_hr->{'password'}) {
+		$self->_message($env, 'error', "Missing password.");
+		return 0;
+	}
+
+	return 1;
+}
+sub _message {
+	my ($self, $env, $message_type, $message) = @_;
+
+	if (defined $self->message_cb) {
+		$self->message_cb->($env, $message_type, $message);
+	}
 
 	return;
 }
@@ -51,6 +84,34 @@ sub _prepare_app {
 	);
 
 	$self->{'_container'} = Tags::HTML::Container->new(%p);
+
+	return;
+}
+
+sub _process_actions {
+	my ($self, $env) = @_;
+
+	if (defined $self->login_cb && $env->{'REQUEST_METHOD'} eq 'POST') {
+		my $req = Plack::Request->new($env);
+		my $body_params_hr = $req->body_parameters;
+		my ($status, $messages_ar) = $self->_login_check($env, $body_params_hr);
+		my $res = Plack::Response->new;
+		if ($status) {
+			if ($self->login_cb->($env, $body_params_hr->{'username'},
+				$body_params_hr->{'password'})) {
+
+				$self->_message($env, 'info',
+					"User '$body_params_hr->{'username'}' is logged.");
+				$res->redirect($self->redirect_login);
+			} else {
+				$self->_message($env, 'error', 'Bad login.');
+				$res->redirect($self->redirect_error);
+			}
+		} else {
+			$res->redirect($self->redirect_error);
+		}
+		$self->psgi_app($res->finalize);
+	}
 
 	return;
 }
@@ -156,7 +217,6 @@ Default value is 1.
 =item * C<flag_end>
 
 Flag that means end of html writing via L<Tags::HTML::Page::End>.
-
 Default value is 1.
 
 =item * C<generator>
@@ -165,10 +225,38 @@ HTML generator string.
 
 Default value is 'Plack::App::Login; Version: __VERSION__'.
 
+=item * C<login_cb>
+
+Callback for main login.
+Arguments for callback are: C<$env>, C<username> and C<$password>.
+Returns 0/1 for (un)successful login.
+
+Default value is undef.
+
+=item * C<message_cb>
+
+Callback to process message from application.
+Arguments for callback are: C<$env>, C<$message_type> and C<$message>.
+Returns undef.
+
+Default value is undef.
+
 =item * C<psgi_app>
 
 PSGI application to run instead of normal process.
 Intent of this is change application in C<_process_actions> method.
+
+Default value is undef.
+
+=item * C<redirect_login>
+
+Redirect URL after successful login.
+
+Default value is undef.
+
+=item * C<redirect_error>
+
+Redirect URL after error in login.
 
 Default value is undef.
 
@@ -360,6 +448,8 @@ Returns Plack::Component object.
 =head1 DEPENDENCIES
 
 L<Plack::Component::Tags::HTML>,
+L<Plack::Request>,
+L<Plack::Response>,
 L<Plack::Session>,
 L<Plack::Util::Accessor>,
 L<Tags::HTML::Container>,

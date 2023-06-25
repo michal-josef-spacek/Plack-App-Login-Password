@@ -69,7 +69,6 @@ METHODS
     *       "flag_end"
 
             Flag that means end of html writing via Tags::HTML::Page::End.
-
             Default value is 1.
 
     *       "generator"
@@ -78,10 +77,36 @@ METHODS
 
             Default value is 'Plack::App::Login; Version: __VERSION__'.
 
+    *       "login_cb"
+
+            Callback for main login. Arguments for callback are: $env,
+            "username" and $password. Returns 0/1 for (un)successful login.
+
+            Default value is undef.
+
+    *       "message_cb"
+
+            Callback to process message from application. Arguments for
+            callback are: $env, $message_type and $message. Returns undef.
+
+            Default value is undef.
+
     *       "psgi_app"
 
             PSGI application to run instead of normal process. Intent of
             this is change application in "_process_actions" method.
+
+            Default value is undef.
+
+    *       "redirect_login"
+
+            Redirect URL after successful login.
+
+            Default value is undef.
+
+    *       "redirect_error"
+
+            Redirect URL after error in login.
 
             Default value is undef.
 
@@ -264,8 +289,9 @@ EXAMPLE
      # </html>
 
 DEPENDENCIES
-    Plack::Component::Tags::HTML, Plack::Session, Plack::Util::Accessor,
-    Tags::HTML::Container, Tags::HTML::Login::Password.
+    Plack::Component::Tags::HTML, Plack::Request, Plack::Response,
+    Plack::Session, Plack::Util::Accessor, Tags::HTML::Container,
+    Tags::HTML::Login::Password.
 
 SEE ALSO
     Plack::App::Login

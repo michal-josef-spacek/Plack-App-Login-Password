@@ -19,6 +19,8 @@ perl_version 5.008;
 readme_from 'Password.pm';
 recursive_author_tests('xt');
 requires 'Plack::Component::Tags::HTML' => 0.15;
+requires 'Plack::Request' => 0;
+requires 'Plack::Response' => 0;
 requires 'Plack::Session' => 0;
 requires 'Plack::Util::Accessor' => 0;
 requires 'Tags::HTML::Container' => 0;
