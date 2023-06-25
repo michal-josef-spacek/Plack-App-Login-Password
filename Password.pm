@@ -50,9 +50,7 @@ sub _prepare_app {
 		'register_url' => $self->register_link,
 	);
 
-	$self->{'_container'} = Tags::HTML::Container->new(
-		%p,
-	);
+	$self->{'_container'} = Tags::HTML::Container->new(%p);
 
 	return;
 }
@@ -364,6 +362,7 @@ Returns Plack::Component object.
 L<Plack::Component::Tags::HTML>,
 L<Plack::Session>,
 L<Plack::Util::Accessor>,
+L<Tags::HTML::Container>,
 L<Tags::HTML::Login::Password>.
 
 =head1 SEE ALSO

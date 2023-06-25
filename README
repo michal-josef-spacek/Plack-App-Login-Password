@@ -265,7 +265,7 @@ EXAMPLE
 
 DEPENDENCIES
     Plack::Component::Tags::HTML, Plack::Session, Plack::Util::Accessor,
-    Tags::HTML::Login::Password.
+    Tags::HTML::Container, Tags::HTML::Login::Password.
 
 SEE ALSO
     Plack::App::Login
