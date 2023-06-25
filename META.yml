@@ -29,7 +29,7 @@ no_index:
     - t
     - xt
 requires:
-  Plack::Component::Tags::HTML: 0.13
+  Plack::Component::Tags::HTML: 0.15
   Plack::Util::Accessor: 0
   Tags::HTML::Container: 0
   Tags::HTML::Login::Access: 0

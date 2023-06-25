@@ -11,7 +11,7 @@ use Tags::HTML::Login::Access;
 our $VERSION = 0.02;
 
 sub _css {
-	my $self = shift;
+	my ($self, $env) = @_;
 
 	$self->{'_container'}->process_css;
 	$self->{'_login_access'}->process_css;
@@ -54,7 +54,7 @@ sub _prepare_app {
 }
 
 sub _tags_middle {
-	my $self = shift;
+	my ($self, $env) = @_;
 
 	$self->{'_container'}->process(
 		sub {
