@@ -1,4 +1,5 @@
 0.02
+ - Add support of autofocus.
  - Add support of messages.
  - Improve constructor parameters in doc.
  - Update tests to independent of package version.
