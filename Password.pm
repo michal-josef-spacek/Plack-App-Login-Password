@@ -7,7 +7,7 @@ use warnings;
 use Plack::Request;
 use Plack::Response;
 use Plack::Session;
-use Plack::Util::Accessor qw(generator login_cb message_cb redirect_login redirect_error
+use Plack::Util::Accessor qw(generator login_cb logo_image_url message_cb redirect_login redirect_error
 	register_link title);
 use Tags::HTML::Container;
 use Tags::HTML::Login::Access;
@@ -80,6 +80,7 @@ sub _prepare_app {
 	# Tags helper for login button.
 	$self->{'_login_access'} = Tags::HTML::Login::Access->new(
 		%p,
+		'logo_image_url' => $self->logo_image_url,
 		'register_url' => $self->register_link,
 	);
 
@@ -230,6 +231,12 @@ Default value is 'Plack::App::Login; Version: __VERSION__'.
 Callback for main login.
 Arguments for callback are: C<$env>, C<username> and C<$password>.
 Returns 0/1 for (un)successful login.
+
+Default value is undef.
+
+=item * C<logo_image_url>
+
+URL to logo image.
 
 Default value is undef.
 

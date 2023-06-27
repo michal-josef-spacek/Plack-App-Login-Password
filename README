@@ -84,6 +84,12 @@ METHODS
 
             Default value is undef.
 
+    *       "logo_image_url"
+
+            URL to logo image.
+
+            Default value is undef.
+
     *       "message_cb"
 
             Callback to process message from application. Arguments for
