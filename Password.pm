@@ -46,6 +46,7 @@ sub _login_check {
 
 	return 1;
 }
+
 sub _message {
 	my ($self, $env, $message_type, $message) = @_;
 
