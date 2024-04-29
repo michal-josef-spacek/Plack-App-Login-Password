@@ -2,7 +2,8 @@ TODO
 ====
 2. Add image of app to doc.
 3. Translate app to defined language texts.
-4.
+4. Add full plack app to doc (See Plack::App::Login::Request doc).
+5.
 
 Applied
 =======
