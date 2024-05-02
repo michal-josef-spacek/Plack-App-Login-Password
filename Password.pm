@@ -167,8 +167,6 @@ Plack::App::Login::Password - Plack login/password application.
 
 Constructor.
 
-Returns instance of object.
-
 =over 8
 
 =item * C<author>
@@ -185,15 +183,15 @@ Default value is 'text/html; charset=__ENCODING__'.
 
 =item * C<css>
 
-Instance of CSS::Struct::Output object.
+Instance of L<CSS::Struct::Output> object.
 
-Default value is CSS::Struct::Output::Raw instance.
+Default value is L<CSS::Struct::Output::Raw> instance.
 
 =item * C<css_init>
 
-Reference to array with CSS::Struct structure.
+Reference to array with L<CSS::Struct> structure.
 
-Default value is CSS initialization from Tags::HTML::Page::Begin like
+Default value is CSS initialization from L<Tags::HTML::Page::Begin> like
 
  * {
 	box-sizing: border-box;
@@ -297,7 +295,7 @@ Default value is 200.
 
 =item * C<tags>
 
-Instance of Tags::Output object.
+Instance of L<Tags::Output> object.
 
 Default value is
 
@@ -320,6 +318,8 @@ Page title.
 Default value is 'Login page'.
 
 =back
+
+Returns instance of object.
 
 =head2 C<call>
 
