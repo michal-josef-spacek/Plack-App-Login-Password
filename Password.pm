@@ -12,7 +12,7 @@ use Plack::Util::Accessor qw(generator login_cb logo_image_url message_cb redire
 use Tags::HTML::Container;
 use Tags::HTML::Login::Access 0.10;
 
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 sub _css {
 	my ($self, $env) = @_;
@@ -500,6 +500,6 @@ BSD 2-Clause License
 
 =head1 VERSION
 
-0.03
+0.04
 
 =cut
