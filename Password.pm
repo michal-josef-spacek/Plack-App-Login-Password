@@ -8,9 +8,9 @@ use Plack::Request;
 use Plack::Response;
 use Plack::Session;
 use Plack::Util::Accessor qw(generator login_cb logo_image_url message_cb redirect_login redirect_error
-	register_link title);
+	register_link tags_after title);
 use Tags::HTML::Container;
-use Tags::HTML::Login::Access;
+use Tags::HTML::Login::Access 0.10;
 
 our $VERSION = 0.03;
 
@@ -83,6 +83,9 @@ sub _prepare_app {
 		%p,
 		'logo_image_url' => $self->logo_image_url,
 		'register_url' => $self->register_link,
+		defined $self->tags_after ? (
+			'tags_after' => $self->tags_after,
+		) : (),
 	);
 
 	$self->{'_container'} = Tags::HTML::Container->new(%p);
@@ -303,6 +306,12 @@ Default value is
          'no_simple' => ['script', 'textarea'],
          'preserved' => ['pre', 'style'],
  );
+
+=item * C<tags_after>
+
+Reference to array with L<Tags> code to use after form.
+
+Default value is undef.
 
 =item * C<title>
 

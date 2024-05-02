@@ -152,6 +152,12 @@ METHODS
                      'preserved' => ['pre', 'style'],
              );
 
+    *       "tags_after"
+
+            Reference to array with Tags code to use after form.
+
+            Default value is undef.
+
     *       "title"
 
             Page title.
