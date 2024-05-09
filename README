@@ -75,6 +75,12 @@ METHODS
 
             Default value is 'Plack::App::Login; Version: __VERSION__'.
 
+    *       "lang"
+
+            Language in ISO 639-2 code.
+
+            Default value is undef.
+
     *       "login_cb"
 
             Callback for main login. Arguments for callback are: $env,
@@ -153,6 +159,18 @@ METHODS
     *       "tags_after"
 
             Reference to array with Tags code to use after form.
+
+            Default value is undef.
+
+    *       "text"
+
+            Hash reference with keys defined language in ISO 639-2 code and
+            value with hash reference with texts.
+
+            Required keys are 'login', 'password_label', 'username_label'
+            and 'submit'.
+
+            See more in Tags::HTML::Login::Access.
 
             Default value is undef.
 

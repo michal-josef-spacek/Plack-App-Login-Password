@@ -7,8 +7,8 @@ use warnings;
 use Plack::Request;
 use Plack::Response;
 use Plack::Session;
-use Plack::Util::Accessor qw(generator login_cb logo_image_url message_cb redirect_login redirect_error
-	register_link tags_after title);
+use Plack::Util::Accessor qw(generator lang login_cb logo_image_url message_cb
+	redirect_login redirect_error register_link tags_after text title);
 use Tags::HTML::Container;
 use Tags::HTML::Login::Access 0.10;
 
@@ -81,10 +81,16 @@ sub _prepare_app {
 	# Tags helper for login button.
 	$self->{'_login_access'} = Tags::HTML::Login::Access->new(
 		%p,
+		defined $self->lang ? (
+			'lang' => $self->lang,
+		) : (),
 		'logo_image_url' => $self->logo_image_url,
 		'register_url' => $self->register_link,
 		defined $self->tags_after ? (
 			'tags_after' => $self->tags_after,
+		) : (),
+		defined $self->text ? (
+			'text' => $self->text,
 		) : (),
 	);
 
@@ -228,6 +234,12 @@ HTML generator string.
 
 Default value is 'Plack::App::Login; Version: __VERSION__'.
 
+=item * C<lang>
+
+Language in ISO 639-2 code.
+
+Default value is undef.
+
 =item * C<login_cb>
 
 Callback for main login.
@@ -308,6 +320,16 @@ Default value is
 =item * C<tags_after>
 
 Reference to array with L<Tags> code to use after form.
+
+Default value is undef.
+
+=item * C<text>
+
+Hash reference with keys defined language in ISO 639-2 code and value with hash reference with texts.
+
+Required keys are 'login', 'password_label', 'username_label' and 'submit'.
+
+See more in L<Tags::HTML::Login::Access>.
 
 Default value is undef.
 
