@@ -121,3 +121,5 @@ Plack::Runner->new->run($app);
 #     </div>
 #   </body>
 # </html>
+
+# Output screenshot is in images/ directory.
