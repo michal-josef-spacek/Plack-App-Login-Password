@@ -485,6 +485,16 @@ Returns Plack::Component object.
  #   </body>
  # </html>
 
+ # Output screenshot is in images/ directory.
+
+=begin html
+
+<a href="https://raw.githubusercontent.com/michal-josef-spacek/Plack-App-Login-Password/master/images/login_password_psgi.png">
+  <img src="https://raw.githubusercontent.com/michal-josef-spacek/Plack-App-Login-Password/master/images/login_password_psgi.png" alt="Web app example" width="300px" height="300px" />
+</a>
+
+=end html
+
 =head1 DEPENDENCIES
 
 L<Plack::Component::Tags::HTML>,

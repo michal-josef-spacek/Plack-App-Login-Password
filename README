@@ -319,6 +319,8 @@ EXAMPLE
      #   </body>
      # </html>
 
+     # Output screenshot is in images/ directory.
+
 DEPENDENCIES
     Plack::Component::Tags::HTML, Plack::Request, Plack::Response,
     Plack::Session, Plack::Util::Accessor, Tags::HTML::Container,
