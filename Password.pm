@@ -462,8 +462,9 @@ Returns Plack::Component object.
  #               Login
  #             </legend>
  #             <p>
- #               <label for="username" />
- #               User name
+ #               <label for="username">
+ #                 User name
+ #               </label>
  #               <input type="text" name="username" id="username" />
  #             </p>
  #             <p>
