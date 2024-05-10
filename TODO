@@ -1,6 +1,5 @@
 TODO
 ====
-3. Translate app to defined language texts.
 4. Add full plack app to doc (See Plack::App::Login::Request doc).
 5.
 
@@ -10,4 +9,7 @@ Applied
 OK [20230529] skim
 
 2. Add image of app to doc.
+OK [20240510] skim
+
+3. Translate app to defined language texts.
 OK [20240510] skim
